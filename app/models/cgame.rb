@@ -1,7 +1,7 @@
 class Cgame < ApplicationRecord
   belongs_to :player
-  #belongs_to :home_team, :class_name => "Team", :foreign_key => 'home_team_id'
-  #belongs_to :away_team, :class_name => "Team", :foreign_key => 'away_team_id'
+  belongs_to :home_team, :class_name => "Team", :foreign_key => 'home_team_id'
+  belongs_to :away_team, :class_name => "Team", :foreign_key => 'away_team_id'
   
   def self.getCurrentStats(categories)
   	current= Cgame.select(categories).group('"player_id"').having('games_played = MAX(games_played)').sort_by{|g| g.name}
