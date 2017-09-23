@@ -1,5 +1,5 @@
 require 'csv'
-games=CSV.read('/home/david/workspace/hockey_app/alligames.csv')
+games=CSV.read('alligames.csv')
 games.sort_by!{|game| game[3]}
 cumulativeGames=[]
 (0..81).each do
