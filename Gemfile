@@ -34,15 +34,15 @@ gem 'jbuilder', '~> 2.5'
 gem 'capybara', '~> 2.13'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
+gem 'selenium-webdriver'
+gem 'poltergeist'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'sqlite3'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   
-  gem 'selenium-webdriver'
-  gem 'poltergeist'
+
 end
 
 group :development do
