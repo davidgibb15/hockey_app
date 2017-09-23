@@ -1,0 +1,65 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  games_playerd: 1
+  player: one
+  home: false
+  pos: MyString
+  date: 2017-07-11
+  goals: 1
+  assists: 1
+  points: 1
+  plus_minus: 1
+  pim: 1
+  ppg: 1
+  ppa: 1
+  ppp: 1
+  shg: 1
+  sha: 1
+  shp: 1
+  gwg: 1
+  otg: 1
+  shots: 1
+  toi: 1
+  shifts: 1
+  hits: 1
+  blocks: 1
+  mss: 1
+  gva: 1
+  tka: 1
+  fo: 1
+  fow: 1
+  fol: 1
+
+two:
+  name: MyString
+  games_playerd: 1
+  player: two
+  home: false
+  pos: MyString
+  date: 2017-07-11
+  goals: 1
+  assists: 1
+  points: 1
+  plus_minus: 1
+  pim: 1
+  ppg: 1
+  ppa: 1
+  ppp: 1
+  shg: 1
+  sha: 1
+  shp: 1
+  gwg: 1
+  otg: 1
+  shots: 1
+  toi: 1
+  shifts: 1
+  hits: 1
+  blocks: 1
+  mss: 1
+  gva: 1
+  tka: 1
+  fo: 1
+  fow: 1
+  fol: 1

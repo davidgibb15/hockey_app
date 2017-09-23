@@ -1,0 +1,222 @@
+<%=form_tag stats_path, :method => 'get' do%>
+<p>
+<%= check_box_tag "goals", "goals", value="#{params[:goals]}"%>
+<%=label_tag :goals%>
+<%= number_field_tag :goals_weight , params[:goals_weight], step: :any%>
+
+<%= check_box_tag "assists", "assists"%>
+<%=label_tag :assists%>
+<%= number_field_tag :assists_weight , params[:assists_weight]%>
+
+<%= check_box_tag "points", "points"%>
+<%=label_tag :points%>
+<%= number_field_tag :points_weight , params[:points]%>
+
+<%= check_box_tag "+-", "+-"%>
+<%=label_tag :'+-'%>
+<%= number_field_tag :'+-_weight' , params[:'+-_weight']%>
+
+<%= check_box_tag "ppg", "ppg"%>
+<%=label_tag :ppg%>
+<%= number_field_tag :ppg_weight , params[:ppg_weight]%>
+
+<%= check_box_tag "ppa", "ppa"%>
+<%=label_tag :ppa%>
+<%= number_field_tag :ppa_weight , params[:ppa_weight]%>
+
+<%= check_box_tag "ppp", "ppp"%>
+<%=label_tag :ppp%>
+<%= number_field_tag :ppp_weight , params[:ppp_weight]%>
+
+<%= check_box_tag "shg", "shg"%>
+<%=label_tag :shg%>
+<%= number_field_tag :shg_weight , params[:shg_weight]%>
+
+<%= check_box_tag "shp", "shp"%>
+<%=label_tag :shp%>
+<%= number_field_tag :shp_weight , params[:shp_weight]%>
+
+<%= check_box_tag "gwg", "gwg"%>
+<%=label_tag :gwg%>
+<%= number_field_tag :gwg_weight , params[:gwg_weight]%>
+
+<%= check_box_tag "otg", "otg"%>
+<%=label_tag :otg%>
+<%= number_field_tag :otg_weight , params[:otg_weight]%>
+
+<%= check_box_tag "shots", "shots"%>
+<%=label_tag :shots%>
+<%= number_field_tag :shots_weight , params[:shots_weight]%>
+
+<%= check_box_tag "toi", "toi"%>
+<%=label_tag :toi%>
+<%= number_field_tag :toi_weight , params[:toi_weight]%>
+
+<%= check_box_tag "shifts", "shifts"%>
+<%=label_tag :shifts%>
+<%= number_field_tag :shifts_weight , params[:shifts_weight]%>
+
+<%= check_box_tag "hits", "hits"%>
+<%=label_tag :hits%>
+<%= number_field_tag :hits_weight , params[:hits_weight]%>
+
+<%= check_box_tag "blocks", "blocks"%>
+<%=label_tag :blocks%>
+<%= number_field_tag :blocks_weight , params[:blocks_weight]%>
+
+<%= check_box_tag "mss", "mss"%>
+<%=label_tag :mss%>
+<%= number_field_tag :mss_weight , params[:mss_weight]%>
+
+<%= check_box_tag "gva", "gva"%>
+<%=label_tag :gva%>
+<%= number_field_tag :gva_weight , params[:gva_weight]%>
+
+<%= check_box_tag "tka", "tka"%>
+<%=label_tag :tka%>
+<%= number_field_tag :tka_weight , params[:tka_weight]%>
+
+<%= check_box_tag "fo", "fo"%>
+<%=label_tag :fo%>
+<%= number_field_tag :fo_weight , params[:fo_weight]%>
+
+<%= check_box_tag "fow", "fow"%>
+<%=label_tag :fow%>
+<%= number_field_tag :fow_weight , params[:fow_weight]%>
+
+<%= check_box_tag "fol", "fol"%>
+<%=label_tag :fol%>
+<%= number_field_tag :fol_weight , params[:fol_weight]%>
+
+<%= check_box_tag "pim", "pim"%>
+<%=label_tag :pim%>
+<%= number_field_tag :pim_weight , params[:pim_weight]%>
+
+<%= check_box_tag "sha", "sha"%>
+<%=label_tag :sha%>
+<%= number_field_tag :sha_weight , params[:sha_weight]%>
+
+<%=label_tag :last_n_games%>
+<%=number_field_tag :last_n_games, params[:last_n_games]%>
+<%= submit_tag "search", :name=>nil %>
+
+
+
+</p>
+<%end%>
+
+<table id="myTable" class="tablesorter tablesorter-blue">
+	<thead>
+	<tr>
+		<th><span>Rank</span></th>
+		<th>Name</th>
+		<th>Games</th>
+		<% if @goals %>
+			<th>G</th>
+		<%end%>
+
+		<%if @assists %>
+			<th>A</th>
+		<%end%>
+
+		<%if @points %>
+			<th>P</th>
+		<%end%>
+
+		<%if @p_m %>
+			<th>+-</th>
+		<%end%>
+
+		<%if @pim %>
+			<th>PIM</th>
+		<%end%>
+
+		<%if @ppg%>
+			<th>PPG</th>
+		<%end%>
+
+		<%if @ppa %>
+			<th>PPA</th>
+		<%end%>
+
+		<%if @ppp %>
+			<th>PPP</th>
+		<%end%>
+
+		<%if @shg %>
+			<th>SHG</th>
+		<%end%>
+
+		<%if @sha %>
+			<th>SHA</th>
+		<%end%>
+
+		<%if @shp %>
+			<th>SHP</th>
+		<%end%>
+
+		<%if @gwg %>
+			<th>GWG</th>
+		<%end%>
+
+		<%if @otg %>
+			<th>OTG</th>
+		<%end%>
+
+		<%if @shots %>
+			<th>S</th>
+		<%end%>
+
+		<%if @toi %>
+			<th>TOI</th>
+		<%end%>
+
+		<%if @shifts %>
+			<th>Shifts</th>
+		<%end%>
+
+		<%if @hits %>
+			<th>Hits</th>
+		<%end%>
+
+		<%if @blocks %>
+			<th>Blocks</th>
+		<%end%>
+
+		<%if @mss %>
+			<th>MSS</th>
+		<%end%>
+
+		<%if @gva %>
+			<th>GVA</th>
+		<%end%>
+
+		<%if @tka %>
+			<th>TKA</th>
+		<%end%>
+
+		<%if @fo %>
+			<th>FO</th>
+		<%end%>
+
+		<%if @fow %>
+			<th>FOW</th>
+		<%end%>
+
+		<%if @fol %>
+			<th>FOL</th>
+		<%end%>
+		<th> Score</th>
+	</tr>
+	</thead>
+
+	<% @stats.length.times do |i| %>
+	<tr>
+		<td><%=link_to "#{i}", player_path(:id=>i)%>
+		<%(@categories.length).times do |j|%>
+			<td><%=@stats[i][j] %></td>
+		<%end%>
+		<td><%=@stats[i][@categories.length] %></td>
+	</tr>
+	<% end %>
+</table>

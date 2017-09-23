@@ -1,0 +1,28 @@
+// Place all the styles related to the cgame controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body{
+	background-color: white;
+}
+
+.field_weight{
+	background-color: white;
+	width: 2%;
+	padding: 1px;
+	margin: 10px;
+	height: 10px;
+
+}
+form input[type='number']::-webkit-outer-spin-button,
+form input[type='number']::-webkit-inner-spin-button {
+   margin: 0;
+}
+input[type=number] {
+    -moz-appearance:textfield;
+    background-color: white;
+	width: 2%;
+	padding: 1px;
+	margin: 10px;
+	height: 10px;
+	
+}
