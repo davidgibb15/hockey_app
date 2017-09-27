@@ -14,14 +14,14 @@ class Cgame < ApplicationRecord
   def self.currentMinusNgames(current, ngamesago, numgames)
   	numCats=current.attributes.length
   	if(current.games_played < numgames)
-  		current.attributes.values.slice(3,numCats)
+  		current.attributes.values.slice(4,numCats)
   	else
-  		current.attributes.values.slice(3,numCats).zip(ngamesago.attributes.values.slice(3,numCats)).map{|a,b| a-b}
+  		current.attributes.values.slice(4,numCats).zip(ngamesago.attributes.values.slice(4,numCats)).map{|a,b| a-b}
   	end
   end
 
   def self.reinsertNamesGames(stats, original, numGames) 
-  	stats.zip(original.map{|player| [player[:name],[player[:games_played]+1,numGames].min]}).map{|statLine, name_games| statLine.unshift(name_games[0],name_games[1])}
+  	stats.zip(original.map{|player| [player[:name],[player[:games_played]+1,numGames].min, player[:player_id]]}).map{|statLine, name_games, player_id| statLine.unshift(name_games[0],name_games[1]).push(player_id)}
   end
 
   def self.getRatings(statLines, min, max, weights)
@@ -47,8 +47,10 @@ class Cgame < ApplicationRecord
   	max = lastNGamesStatLines.transpose.map{|column| column.max}
   	adjustedStatLines = lastNGamesStatLines.map{|playerStats| playerStats.zip(min,max)}.map{|row|row.map{|stat,minStat,maxStat| (stat.to_f-minStat)/(maxStat-minStat)}}
   	adjustedStatLines = adjustedStatLines.map{|playerStatLine| playerStatLine.push(playerStatLine.sum)}
+  	p "hello"
   	adjustedStatLines = reinsertNamesGames(adjustedStatLines, currentStatLines, numGames)
-  	adjustedStatLines.sort_by!{|statLine| -statLine[statLine.length-1]}
+  	p adjustedStatLines[0]
+  	adjustedStatLines.sort_by!{|statLine| -statLine[statLine.length-2]}
   end
 
   def self.getMin(lastNGamesStatLines, games_played)
@@ -108,7 +110,7 @@ class Cgame < ApplicationRecord
   	lastNGamesStatLines.map!{|player| player.map{|stat| stat.round(0)}}
   	lastNGamesStatLines.zip(ratings).map{|statLine, rating| statLine.push(rating)}
   	lastNGamesStatLines=reinsertNamesGames(lastNGamesStatLines, currentStatLines, numGames)
-  	lastNGamesStatLines.sort_by!{|statLine| -statLine[statLine.length-1]}
+  	lastNGamesStatLines.sort_by!{|statLine| -statLine[statLine.length-2]}
   end
 
   def self.getAverageAdjusted(categories, numgames, weights)

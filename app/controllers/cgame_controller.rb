@@ -1,7 +1,7 @@
 class CgameController < ApplicationController
 	@stats
 	def index
-		@categories=[:name]
+		@categories=[:name, :player_id, :games_played]
 		weights=[]
 		@categories.push(:games_played)
 		@goals=false

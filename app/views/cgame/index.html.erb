@@ -210,13 +210,13 @@
 	</tr>
 	</thead>
 
-	<% @stats.length.times do |i| %>
+	<% (@stats.length).times do |i| %>
 	<tr>
 		<td><%=link_to "#{i}", player_path(:id=>i)%>
-		<%(@categories.length).times do |j|%>
+		<%(@categories.length-1).times do |j|%>
 			<td><%=@stats[i][j] %></td>
 		<%end%>
-		<td><%=@stats[i][@categories.length] %></td>
+		<td><%=@stats[i][@categories.length-1] %></td>
 	</tr>
 	<% end %>
 </table>
