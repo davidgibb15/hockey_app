@@ -80,13 +80,13 @@ class Cgame < ApplicationRecord
 
   def self.getTotal(categories, numGames, weights)
   	currentStatLines = getCurrentStats(categories)
-  	oldStatLines = getNGamesAgoStats(categories, numGames)
-  	lastNGamesStatLines = getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
+  	#oldStatLines = getNGamesAgoStats(categories, numGames)
+  	#lastNGamesStatLines = getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
+  	lastNGamesStatLines=currentStatLines
   	games_played = currentStatLines.map{|player| [player[:games_played]+1,numGames].min}
   	min = getMin(lastNGamesStatLines, games_played)
   	max = getMax(lastNGamesStatLines, games_played)
-  	#min = lastNGamesStatLines.transpose.map{|column| column.min}
-  	#max = lastNGamesStatLines.transpose.map{|column| column.max}
+
   	ratings=getRatings(lastNGamesStatLines, min, max, weights)
   	lastNGamesStatLines.zip(ratings).map{|statLine, rating| statLine.push(rating)}
 
@@ -97,10 +97,10 @@ class Cgame < ApplicationRecord
 
   def self.getAverage(categories,numGames, weights)
   	currentStatLines = getCurrentStats(categories)
-  	oldStatLines = getNGamesAgoStats(categories, numGames)
+  	#oldStatLines = getNGamesAgoStats(categories, numGames)
   	games_played = currentStatLines.map{|player| [player[:games_played]+1,numGames].min}
-  	lastNGamesStatLines = getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
-
+  	#lastNGamesStatLines = getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
+  	lastNGamesStatLines=currentStatLines
   	lastNGamesStatLines=lastNGamesStatLines.zip(games_played).map{|statLine,games| statLine.map{|stat| (stat.to_f*81/games)}}
   	min = lastNGamesStatLines.transpose.map{|column| column.min}
   	max = lastNGamesStatLines.transpose.map{|column| column.max}
