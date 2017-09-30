@@ -46,8 +46,9 @@ end
 require 'csv'
 require 'set'
 
-
-igs=CSV.read('alligames.csv')
+require 'pathname'
+RailsRoot=Pathname.new(RAILS_ROOT).expand_path
+igs=CSV.read(RailsRoot + 'alligames.csv')
 igs.sort_by!{|ig| ig[2]}
 igs.reverse!
 
@@ -73,7 +74,7 @@ end
 
 cumulative_games=[]
 (0..81).each do |i|
-	cgs=CSV.read("cgames/cGames#{i}")
+	cgs=CSV.read(RailsRoot + "cgames/cGames#{i}")
 	cgs.each do |game|
 		id=Player.find_by(name: game[0]).id
 		if game[4]
