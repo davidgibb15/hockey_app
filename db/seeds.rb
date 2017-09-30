@@ -47,7 +47,7 @@ require 'csv'
 require 'set'
 
 require 'pathname'
-RailsRoot=Pathname.new(::RAILS.root).expand_path
+RailsRoot=Pathname.new(::Rails.root).expand_path
 igs=CSV.read(RailsRoot + 'alligames.csv')
 igs.sort_by!{|ig| ig[2]}
 igs.reverse!
