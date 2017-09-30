@@ -4,6 +4,8 @@ class CreateCgames < ActiveRecord::Migration[5.1]
       t.string :name
       t.integer :games_played
       t.references :player, foreign_key: true
+      t.references :home_team
+      t.references :away_team
       t.boolean :home
       t.string :pos
       t.date :date
