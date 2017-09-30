@@ -8,7 +8,7 @@ class Cgame < ApplicationRecord
   end
 
   def self.getNGamesAgoStats(categories, n)
-  	ngamesAgo=Cgame.select(categories).order(:games_played).group_by(&:name).map{|f| f.last[[f.last.length-(n+1),0].max]}.sort_by{|g| g.name}
+  	#ngamesAgo=Cgame.select(categories).order(:games_played).group_by(&:name).map{|f| f.last[[f.last.length-(n+1),0].max]}.sort_by{|g| g.name}
   end
 
   def self.currentMinusNgames(current, ngamesago, numgames)
