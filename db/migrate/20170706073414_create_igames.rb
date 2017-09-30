@@ -2,6 +2,8 @@ class CreateIgames < ActiveRecord::Migration[5.1]
   def change
     create_table :igames do |t|
       t.references :player, foreign_key: true
+      t.references :home_team
+      t.references :away_team
       t.boolean :home
       t.string :pos
       t.date :date

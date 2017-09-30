@@ -47,7 +47,7 @@ require 'csv'
 require 'set'
 
 
-igs=CSV.read('/home/david/workspace/hockey_app/alligames.csv')
+igs=CSV.read('alligames.csv')
 igs.sort_by!{|ig| ig[2]}
 igs.reverse!
 
@@ -73,7 +73,7 @@ end
 
 cumulative_games=[]
 (0..81).each do |i|
-	cgs=CSV.read("/home/david/workspace/hockey_app/cgames/cGames#{i}")
+	cgs=CSV.read("cgames/cGames#{i}")
 	cgs.each do |game|
 		id=Player.find_by(name: game[0]).id
 		if game[4]
