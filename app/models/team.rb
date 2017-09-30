@@ -1,6 +1,7 @@
 class Team < ApplicationRecord
 	has_many :players
-	has_many :igames
+	has_many :igames_home, :class_name => 'Igame', :foreign_key => 'home_game_id'
+	has_many :igames_away, :class_name => 'Igame', :foreign_key => 'away_game_id'
 	has_many :cgames
 	def self.search(search_from,search_to)
 		if search_from && search_to
