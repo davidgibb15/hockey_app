@@ -32,7 +32,7 @@ class CreateIgames < ActiveRecord::Migration[5.1]
       t.integer :fow
       t.integer :fol
 
-
+      
       t.timestamps
     end
   end
