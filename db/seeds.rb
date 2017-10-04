@@ -84,7 +84,7 @@ cumulative_games=[]
 			away_team_id=Team.find_by(abbreviation: game[1]).id
 			home_team_id=Team.find_by(abbreviation: game[5]).id
 		end
-		if home_team_id=="PIT"
+		if home_team_id==Team.find_by("PIT").id
 			cumulative_games.push(name: game[0],games_played: i, home_team_id: home_team_id, away_team_id: away_team_id,player_id: id, home: game[4],pos: game[2], date: game[3],goals: game[6], assists: game[7], points: (game[6].to_i+game[7].to_i),plus_minus: game[8], pim: game[9],ppg: game[10],ppa: game[11],ppp: (game[10].to_i+game[11].to_i), shg: game[12], sha: game[13], shp: (game[12].to_i+game[13].to_i), gwg: game[14], otg: game[15], shots: game[16], toi: game[17], shifts: game[18], hits: game[19], blocks: game[20], mss: game[21], gva: game[22], tka: game[23], fo: (game[24].to_i+game[25].to_i),fow: game[24],fol: game[25])
 		end
 	end
