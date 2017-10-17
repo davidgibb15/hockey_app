@@ -151,6 +151,7 @@ class CgameController < ApplicationController
 		if @numGames == "" || @numGames== nil
 			@numGames=100
 		end
+		@cateogies= @categories.join(", ")
 		weights.map!{|w| w==0 ? w=1 : w}
 		@stats=Cgame.getTotal(@categories,@numGames.to_i, weights)
 	end
