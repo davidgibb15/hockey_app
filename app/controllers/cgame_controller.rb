@@ -152,7 +152,8 @@ class CgameController < ApplicationController
 			@numGames=100
 		end
 		@cateogies= @categories.join(", ")
-		p @categories
+		puts "DEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGINGDEBUGGING"
+		puts @categories
 		weights.map!{|w| w==0 ? w=1 : w}
 		@stats=Cgame.getTotal(@categories,@numGames.to_i, weights)
 	end
