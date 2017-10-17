@@ -20,6 +20,7 @@ class Cgame < ApplicationRecord
         offset +=1
       else
         stats<<[current[i][0],current[i][1]-ngamesago[i-offset][1]]
+      end
     end
   end
 
