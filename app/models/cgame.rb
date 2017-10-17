@@ -4,20 +4,23 @@ class Cgame < ApplicationRecord
   belongs_to :away_team, :class_name => "Team"
   
   def self.getCurrentStats(categories)
-  	current= Cgame.select(categories).distinct('"player_id"').having('games_played = MAX(games_played)').sort_by{|g| g.name}
+    result=ActiveRecord::Base.connection.execute("SELECT #{categories} FROM (SELECT ROW_NUMBER() OVER (PARTITION BY name ORDER BY games_played DESC) as r, cgames.* FROM cgames ) x WHERE x.r =1").values  
   end
 
   def self.getNGamesAgoStats(categories, n)
-  	#ngamesAgo=Cgame.select(categories).order(:games_played).group_by(&:name).map{|f| f.last[[f.last.length-(n+1),0].max]}.sort_by{|g| g.name}
+    result=ActiveRecord::Base.connection.execute("SELECT #{categories} FROM (SELECT ROW_NUMBER() OVER (PARTITION BY name ORDER BY games_played DESC) as r, cgames.* FROM cgames ) x WHERE x.r =#{n+1}").values  
   end
 
   def self.currentMinusNgames(current, ngamesago, numgames)
-  	numCats=current.attributes.length
-  	if(current.games_played < numgames)
-  		current.attributes.values.slice(4,numCats)
-  	else
-  		current.attributes.values.slice(4,numCats).zip(ngamesago.attributes.values.slice(4,numCats)).map{|a,b| a-b}
-  	end
+    stats=[]
+    offset=0
+    current.length.times do |i|
+      if i>=ngamesago.length or current[i][0]!=ngamesago[i-offset][0]
+        stats<<current[i]
+        offset +=1
+      else
+        stats<<[current[i][0],current[i][1]-ngamesago[i-offset][1]]
+    end
   end
 
   def self.reinsertNamesGames(stats, original, numGames) 
@@ -76,6 +79,7 @@ class Cgame < ApplicationRecord
   	end
   	max
   end
+result=ActiveRecord::Base.connection.execute("SELECT * FROM (SELECT ROW_NUMBER() OVER (PARTITION BY name ORDER BY games_played DESC) as r, t.* FROM cgames t) x WHERE x.r =2").values
 
 
   def self.getTotal(categories, numGames, weights)
@@ -83,7 +87,7 @@ class Cgame < ApplicationRecord
   	#oldStatLines = getNGamesAgoStats(categories, numGames)
   	#lastNGamesStatLines = getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
   	lastNGamesStatLines=currentStatLines
-  	games_played = currentStatLines.map{|player| [player[:games_played]+1,numGames].min}
+  	games_played = currentStatLines.map{|player| [player[2]+1,numGames].min}
   	min = getMin(lastNGamesStatLines, games_played)
   	max = getMax(lastNGamesStatLines, games_played)
 
@@ -129,4 +133,9 @@ class Cgame < ApplicationRecord
   	adjustedStatLines.sort_by!{|statLine| -statLine[statLine.length-1]}
   end
 
+end
+
+
+def NGamesAgoStats(categories, n)
+  result=ActiveRecord::Base.connection.execute("SELECT #{categories} FROM (SELECT ROW_NUMBER() OVER (PARTITION BY name ORDER BY games_played DESC) as r, cgames.* FROM cgames ) x WHERE x.r =#{n}").values
 end
