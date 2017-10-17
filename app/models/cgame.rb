@@ -79,8 +79,6 @@ class Cgame < ApplicationRecord
   	end
   	max
   end
-result=ActiveRecord::Base.connection.execute("SELECT * FROM (SELECT ROW_NUMBER() OVER (PARTITION BY name ORDER BY games_played DESC) as r, t.* FROM cgames t) x WHERE x.r =2").values
-
 
   def self.getTotal(categories, numGames, weights)
   	currentStatLines = getCurrentStats(categories)
@@ -133,9 +131,4 @@ result=ActiveRecord::Base.connection.execute("SELECT * FROM (SELECT ROW_NUMBER()
   	adjustedStatLines.sort_by!{|statLine| -statLine[statLine.length-1]}
   end
 
-end
-
-
-def NGamesAgoStats(categories, n)
-  result=ActiveRecord::Base.connection.execute("SELECT #{categories} FROM (SELECT ROW_NUMBER() OVER (PARTITION BY name ORDER BY games_played DESC) as r, cgames.* FROM cgames ) x WHERE x.r =#{n}").values
 end
