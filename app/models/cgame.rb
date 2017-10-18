@@ -12,7 +12,6 @@ class Cgame < ApplicationRecord
   end
 
   def self.currentMinusNgames(current, ngamesago, numgames)
-    puts current.join(' ')
     current=current.slice(3,current.length-3)
     if ngamesago == nil
       ngamesago= [0]*current.length
@@ -29,6 +28,10 @@ class Cgame < ApplicationRecord
   end
 
   def self.getRatings(statLines, min, max, weights)
+    puts statLines.join(' ')
+    puts min.join(' ')
+    puts max.join(' ')
+    puts weights.join(' ')
   	statLines = statLines.map{|playerStats| playerStats.zip(min,max,weights)}.map{|row|row.map{|stat,minStat,maxStat,weight| (stat.to_f-minStat)/(maxStat-minStat)*weight}}
   	ratings = statLines.map{|playerStatLine| playerStatLine.sum}
   	ratings
@@ -40,8 +43,6 @@ class Cgame < ApplicationRecord
   	currentStatLines.zip(oldStatLines).map do |current, old|
   		lastNGamesStatLines.push(currentMinusNgames(current, old, numGames))
   	end
-    puts 'here'
-    puts lastNGamesStatLines.join(' ')
   	lastNGamesStatLines
   end
 
