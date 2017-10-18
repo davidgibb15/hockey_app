@@ -40,6 +40,7 @@ class Cgame < ApplicationRecord
   	currentStatLines.zip(oldStatLines).map do |current, old|
   		lastNGamesStatLines.push(currentMinusNgames(current, old, numGames))
   	end
+    puts lastNGamesStatLines.join(' ')
   	lastNGamesStatLines
   end
 
