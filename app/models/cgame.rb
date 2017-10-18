@@ -21,6 +21,7 @@ class Cgame < ApplicationRecord
       else
         stats<<[current[i][0],current[i][1]-ngamesago[i-offset][1]]
       end
+      actual_stats=stats.slice(3,current.length-3)
     end
   end
 
@@ -83,8 +84,8 @@ class Cgame < ApplicationRecord
 
   def self.getTotal(categories, numGames, weights)
   	currentStatLines = getCurrentStats(categories)
-  	#oldStatLines = getNGamesAgoStats(categories, numGames)
-  	#lastNGamesStatLines = getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
+  	oldStatLines = getNGamesAgoStats(categories, numGames)
+  	lastNGamesStatLines = getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
   	lastNGamesStatLines=currentStatLines
   	games_played = currentStatLines.map{|player| [player[2]+1,numGames].min}
   	min = getMin(lastNGamesStatLines, games_played)
