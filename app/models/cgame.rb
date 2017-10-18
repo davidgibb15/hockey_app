@@ -37,8 +37,14 @@ class Cgame < ApplicationRecord
   end
 
   def self.getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
+    puts "in get last"
+
+    puts "current"
+    puts currentStatLines
   	lastNGamesStatLines = []
     oldStatLines == nil ? oldStatLines = [0]*lastNGamesStatLines.length : oldStatLines
+    puts "old"
+    puts oldStatLines
   	currentStatLines.zip(oldStatLines).map do |current, old|
       puts currentStatLines
   		lastNGamesStatLines.push(currentMinusNgames(current, old, numGames))
@@ -65,6 +71,7 @@ class Cgame < ApplicationRecord
   end
 
   def self.getMin(lastNGamesStatLines, games_played)
+    puts "in get min"
     puts lastNGamesStatLines
   	min=[10000]*lastNGamesStatLines[0].length
   	games_played.length.times.each do |i|
