@@ -14,7 +14,7 @@ class Cgame < ApplicationRecord
   def self.currentMinusNgames(current, ngamesago, numgames)
     puts current.join(' ')
     if ngamesago == nil
-      ngamesago= [0]*lastNGamesStatLines.length
+      ngamesago= [0]*current.length
     end
     stats=[]
     current.length.times do |i|
