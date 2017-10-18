@@ -85,13 +85,13 @@ class Cgame < ApplicationRecord
   def self.getTotal(categories, numGames, weights)
   	currentStatLines = getCurrentStats(categories)
     puts "current"
-    puts currentStatLines
+    puts currentStatLines.join(' ')
   	oldStatLines = getNGamesAgoStats(categories, numGames)
     puts "old"
-    puts oldStatLines
+    puts oldStatLines.join(' ')
   	lastNGamesStatLines = getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
     puts "last n"
-    puts lastNGamesStatLines
+    puts lastNGamesStatLines.join(' ')
   	#lastNGamesStatLines=currentStatLines
   	games_played = currentStatLines.map{|player| [player[2]+1,numGames].min}
   	min = getMin(lastNGamesStatLines, games_played)
