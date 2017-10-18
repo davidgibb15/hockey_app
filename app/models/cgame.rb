@@ -21,6 +21,7 @@ class Cgame < ApplicationRecord
     current.length.times do |i|
         stats<<current[i]-ngamesago[i]
     end
+    puts stats.join(' ')
   end
 
   def self.reinsertNamesGames(stats, original, numGames) 
