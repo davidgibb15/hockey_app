@@ -12,19 +12,12 @@ class Cgame < ApplicationRecord
   end
 
   def self.currentMinusNgames(current, ngamesago, numgames)
-    ngamesago == nil ? ngamesago = [] : ngamesago
     stats=[]
     offset=0
-    puts current[0]
     current.length.times do |i|
-      if i>=ngamesago.length or current[i][0]!=ngamesago[i-offset][0]
-        stats<<current[i]
-        offset +=1
-      else
         stats<<[current[i][0],current[i][1]-ngamesago[i-offset][1]]
-      end
-      actual_stats=stats.slice(3,current.length-3)
     end
+    actual_stats=stats.slice(3,current.length-3)
   end
 
   def self.reinsertNamesGames(stats, original, numGames) 
