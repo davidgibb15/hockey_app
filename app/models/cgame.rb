@@ -12,6 +12,7 @@ class Cgame < ApplicationRecord
   end
 
   def self.currentMinusNgames(current, ngamesago, numgames)
+    puts "in current minus N"
     ngamesago == nil ? ngamesago = [] : ngamesago
     stats=[]
     offset=0
@@ -38,19 +39,10 @@ class Cgame < ApplicationRecord
 
   def self.getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
     puts "in get last"
-
-    puts "current"
-    puts currentStatLines
   	lastNGamesStatLines = []
     oldStatLines == nil ? oldStatLines = [0]*lastNGamesStatLines.length : oldStatLines
-    puts "old"
-    puts oldStatLines
   	currentStatLines.zip(oldStatLines).map do |current, old|
-      puts currentStatLines
   		lastNGamesStatLines.push(currentMinusNgames(current, old, numGames))
-      puts " "
-      puts lastNGamesStatLines
-      puts " "
   	end
   	lastNGamesStatLines
   end
@@ -97,10 +89,14 @@ class Cgame < ApplicationRecord
   end
 
   def self.getTotal(categories, numGames, weights)
+    puts "in get Total"
   	currentStatLines = getCurrentStats(categories)
+    puts "in get total after get current"
   	oldStatLines = getNGamesAgoStats(categories, numGames)
+    puts "in get total after old statLine "
   	lastNGamesStatLines = getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
-  	lastNGamesStatLines=currentStatLines
+    puts "in get total after lastN"
+  	#lastNGamesStatLines=currentStatLines
   	games_played = currentStatLines.map{|player| [player[2]+1,numGames].min}
   	min = getMin(lastNGamesStatLines, games_played)
   	max = getMax(lastNGamesStatLines, games_played)
