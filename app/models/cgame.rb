@@ -103,7 +103,8 @@ class Cgame < ApplicationRecord
   	lastNGamesStatLines.zip(ratings).map{|statLine, rating| statLine.push(rating)}
 
   	lastNGamesStatLines=reinsertNamesGames(lastNGamesStatLines, currentStatLines, numGames)
-  	lastNGamesStatLines.sort_by!{|statLine| -statLine[statLine.length-1]}
+    puts lastNGamesStatLines[0]
+  	lastNGamesStatLines.sort_by!{|statLine| -statLine[statLine.length-2]}
 
   end
 
