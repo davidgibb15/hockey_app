@@ -12,7 +12,6 @@ class Cgame < ApplicationRecord
   end
 
   def self.currentMinusNgames(current, ngamesago, numgames)
-    puts "in current minus N"
     ngamesago == nil ? ngamesago = [] : ngamesago
     stats=[]
     offset=0
@@ -38,7 +37,6 @@ class Cgame < ApplicationRecord
   end
 
   def self.getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
-    puts "in get last"
   	lastNGamesStatLines = []
     oldStatLines == nil ? oldStatLines = [0]*lastNGamesStatLines.length : oldStatLines
   	currentStatLines.zip(oldStatLines).map do |current, old|
@@ -56,15 +54,11 @@ class Cgame < ApplicationRecord
   	max = lastNGamesStatLines.transpose.map{|column| column.max}
   	adjustedStatLines = lastNGamesStatLines.map{|playerStats| playerStats.zip(min,max)}.map{|row|row.map{|stat,minStat,maxStat| (stat.to_f-minStat)/(maxStat-minStat)}}
   	adjustedStatLines = adjustedStatLines.map{|playerStatLine| playerStatLine.push(playerStatLine.sum)}
-  	p "hello"
   	adjustedStatLines = reinsertNamesGames(adjustedStatLines, currentStatLines, numGames)
-  	p adjustedStatLines[0]
   	adjustedStatLines.sort_by!{|statLine| -statLine[statLine.length-2]}
   end
 
   def self.getMin(lastNGamesStatLines, games_played)
-    puts "in get min"
-    puts lastNGamesStatLines
   	min=[10000]*lastNGamesStatLines[0].length
   	games_played.length.times.each do |i|
   		if games_played[i]>10
@@ -89,13 +83,15 @@ class Cgame < ApplicationRecord
   end
 
   def self.getTotal(categories, numGames, weights)
-    puts "in get Total"
   	currentStatLines = getCurrentStats(categories)
-    puts "in get total after get current"
+    puts "current"
+    puts currentStatLines
   	oldStatLines = getNGamesAgoStats(categories, numGames)
-    puts "in get total after old statLine "
+    puts "old"
+    puts oldStatLines
   	lastNGamesStatLines = getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
-    puts "in get total after lastN"
+    puts "last n"
+    puts lastNGamesStatLines
   	#lastNGamesStatLines=currentStatLines
   	games_played = currentStatLines.map{|player| [player[2]+1,numGames].min}
   	min = getMin(lastNGamesStatLines, games_played)
