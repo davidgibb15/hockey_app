@@ -84,6 +84,7 @@ class Cgame < ApplicationRecord
   end
 
   def self.getTotal(categories, numGames, weights)
+    weights=[1]
   	currentStatLines = getCurrentStats(categories)
     puts "current"
     puts currentStatLines.join(' ')
