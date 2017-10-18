@@ -13,8 +13,9 @@ class Cgame < ApplicationRecord
 
   def self.currentMinusNgames(current, ngamesago, numgames)
     puts current.join(' ')
-    puts ngamesago.join(' ')
-    puts ' '
+    if ngamesago == nil
+      ngamesago= [0]*lastNGamesStatLines.length
+    end
     stats=[]
     current.length.times do |i|
         stats<<current[i]-ngamesago[i]
@@ -34,9 +35,7 @@ class Cgame < ApplicationRecord
 
   def self.getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
   	lastNGamesStatLines = []
-    if oldStatLines == nil
-      oldStatLines = [0]*lastNGamesStatLines.length
-    end
+
   	currentStatLines.zip(oldStatLines).map do |current, old|
   		lastNGamesStatLines.push(currentMinusNgames(current, old, numGames))
   	end
