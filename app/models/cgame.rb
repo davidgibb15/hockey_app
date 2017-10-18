@@ -13,6 +13,7 @@ class Cgame < ApplicationRecord
 
   def self.currentMinusNgames(current, ngamesago, numgames)
     puts current.join(' ')
+    current=current.slice(3,current.length-3)
     if ngamesago == nil
       ngamesago= [0]*current.length
     end
@@ -20,7 +21,6 @@ class Cgame < ApplicationRecord
     current.length.times do |i|
         stats<<current[i]-ngamesago[i]
     end
-    actual_stats=stats.slice(3,current.length-3)
   end
 
   def self.reinsertNamesGames(stats, original, numGames) 
