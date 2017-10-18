@@ -12,6 +12,7 @@ class Cgame < ApplicationRecord
   end
 
   def self.currentMinusNgames(current, ngamesago, numgames)
+    p current
     stats=[]
     offset=0
     current.length.times do |i|
