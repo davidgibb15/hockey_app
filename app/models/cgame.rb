@@ -34,7 +34,9 @@ class Cgame < ApplicationRecord
 
   def self.getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
   	lastNGamesStatLines = []
-    oldStatLines == nil ? oldStatLines = [0]*lastNGamesStatLines.length : oldStatLines
+    if oldStatLines == nil
+      oldStatLines = [0]*lastNGamesStatLines.length
+    end
   	currentStatLines.zip(oldStatLines).map do |current, old|
   		lastNGamesStatLines.push(currentMinusNgames(current, old, numGames))
   	end
