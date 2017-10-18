@@ -16,16 +16,12 @@ class Cgame < ApplicationRecord
     stats=[]
     offset=0
     current.length.times do |i|
-      puts i
       if i>=ngamesago.length or current[i][0]!=ngamesago[i-offset][0]
-        puts "if"
         stats<<current[i]
         offset +=1
       else
-        puts "else"
         stats<<[current[i][0],current[i][1]-ngamesago[i-offset][1]]
       end
-      puts "end"
       actual_stats=stats.slice(3,current.length-3)
     end
   end
@@ -43,7 +39,11 @@ class Cgame < ApplicationRecord
   def self.getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
   	lastNGamesStatLines = []
   	currentStatLines.zip(oldStatLines).map do |current, old|
+      puts currentStatLines
   		lastNGamesStatLines.push(currentMinusNgames(current, old, numGames))
+      puts " "
+      puts lastNGamesStatLines
+      puts " "
   	end
   	lastNGamesStatLines
   end
@@ -64,6 +64,7 @@ class Cgame < ApplicationRecord
   end
 
   def self.getMin(lastNGamesStatLines, games_played)
+    puts lastNGamesStatLines
   	min=[10000]*lastNGamesStatLines[0].length
   	games_played.length.times.each do |i|
   		if games_played[i]>10
