@@ -15,6 +15,7 @@ class Cgame < ApplicationRecord
     ngamesago == nil ? ngamesago = [] : ngamesago
     stats=[]
     offset=0
+    puts current[0]
     current.length.times do |i|
       if i>=ngamesago.length or current[i][0]!=ngamesago[i-offset][0]
         stats<<current[i]
