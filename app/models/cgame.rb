@@ -24,7 +24,7 @@ class Cgame < ApplicationRecord
   end
 
   def self.reinsertNamesGames(stats, original, numGames) 
-  	stats.zip(original.map{|player| [player[:name],[player[:games_played]+1,numGames].min, player[:player_id]]}).map{|statLine, name_games, player_id| statLine.unshift(name_games[0],name_games[1]).push(player_id)}
+  	stats.zip(original.map{|player| [player[0],[player[2]+1,numGames].min, player[1]]}).map{|statLine, name_games, player_id| statLine.unshift(name_games[0],name_games[1]).push(player_id)}
   end
 
   def self.getRatings(statLines, min, max, weights)
