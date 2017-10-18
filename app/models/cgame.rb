@@ -12,7 +12,7 @@ class Cgame < ApplicationRecord
   end
 
   def self.currentMinusNgames(current, ngamesago, numgames)
-    puts current
+    puts ngamesago
     puts "hellloooo"
     stats=[]
     offset=0
