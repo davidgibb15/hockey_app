@@ -17,12 +17,16 @@ class Cgame < ApplicationRecord
     stats=[]
     offset=0
     current.length.times do |i|
+      puts i
       if i>=ngamesago.length or current[i][0]!=ngamesago[i-offset][0]
+        puts "if"
         stats<<current[i]
         offset +=1
       else
+        puts "else"
         stats<<[current[i][0],current[i][1]-ngamesago[i-offset][1]]
       end
+      puts "end"
       actual_stats=stats.slice(3,current.length-3)
     end
   end
