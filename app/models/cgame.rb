@@ -13,9 +13,8 @@ class Cgame < ApplicationRecord
 
   def self.currentMinusNgames(current, ngamesago, numgames)
     stats=[]
-    offset=0
     current.length.times do |i|
-        stats<<[current[i][0],current[i][1]-ngamesago[i-offset][1]]
+        stats<<[current[i]-ngamesago[i]]
     end
     actual_stats=stats.slice(3,current.length-3)
   end
