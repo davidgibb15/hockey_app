@@ -12,13 +12,13 @@ class Cgame < ApplicationRecord
   end
 
   def self.currentMinusNgames(current, ngamesago, numgames)
-    puts ngamesago
+    puts ngamesago.length
     puts "hellloooo"
     stats=[]
     offset=0
     current.length.times do |i|
       puts i
-      if i>=ngamesago.length or current[i][0]!=ngamesago[i-offset][0]
+      if ngamesago=nil or i>=ngamesago.length or current[i][0]!=ngamesago[i-offset][0]
         puts "if"
         stats<<current[i]
         offset +=1
