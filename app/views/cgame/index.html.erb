@@ -213,10 +213,11 @@
 	<% (@stats.length).times do |i| %>
 	<tr>
 		<td><%=link_to "#{i}", player_path(:id=>i)%>
-		<%(@categories.length-1).times do |j|%>
+		<%(@num_cats-1).times do |j|%>
+
 			<td><%=@stats[i][j] %></td>
 		<%end%>
-		<td><%=@stats[i][@categories.length-1] %></td>
+		<td><%=@stats[i][@num_cats-1] %></td>
 	</tr>
 	<% end %>
 </table>

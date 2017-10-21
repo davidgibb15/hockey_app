@@ -1,7 +1,7 @@
 class CgameController < ApplicationController
 	@stats
 	def index
-		@categories=["name", "player_id", "games_played" ,"goals"]
+		@categories=["name", "player_id", "games_played"]
 		weights=[]
 		@goals=false
 		if params[:goals]
@@ -151,6 +151,7 @@ class CgameController < ApplicationController
 		if @numGames == "" || @numGames== nil
 			@numGames=100
 		end
+		@num_cats=@categories.length
 		@categories= @categories.join(", ")
 		weights.map!{|w| w==0 ? w=1 : w}
 		@stats=Cgame.getTotal(@categories,@numGames.to_i, weights)

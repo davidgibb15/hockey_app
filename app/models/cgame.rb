@@ -12,10 +12,8 @@ class Cgame < ApplicationRecord
   end
 
   def self.currentMinusNgames(current, ngamesago, numgames)
-    current=current.slice(3,current.length-3)
-    if ngamesago == nil
-      ngamesago= [0]*current.length
-    end
+    current = current.slice(3,current.length-3)
+    ngamesago = ngamesago.slice(3, ngamesago.length-3)
     stats=[]
     current.length.times do |i|
         stats<<current[i]-ngamesago[i]
@@ -28,10 +26,6 @@ class Cgame < ApplicationRecord
   end
 
   def self.getRatings(statLines, min, max, weights)
-    puts statLines.join(' ')
-    puts min.join(' ')
-    puts max.join(' ')
-    puts weights.join(' ')
   	statLines = statLines.map{|playerStats| playerStats.zip(min,max,weights)}.map{|row|row.map{|stat,minStat,maxStat,weight| (stat.to_f-minStat)/(maxStat-minStat)*weight}}
   	ratings = statLines.map{|playerStatLine| playerStatLine.sum}
   	ratings
@@ -61,8 +55,8 @@ class Cgame < ApplicationRecord
 
   def self.getMin(lastNGamesStatLines, games_played)
   	min=[10000]*lastNGamesStatLines[0].length
-  	games_played.length.times.each do |i|
-  		if games_played[i]>10
+  	games_played.length.times do |i|
+  		if games_played[i]>5
   			lastNGamesStatLines[0].length.times.each do |j|
   				min[j]>lastNGamesStatLines[i][j] ? min[j] = lastNGamesStatLines[i][j] : min[j]
   			end
@@ -74,7 +68,7 @@ class Cgame < ApplicationRecord
   def self.getMax(lastNGamesStatLines, games_played)
   	max=[-10000]*lastNGamesStatLines[0].length
   	games_played.length.times.each do |i|
-  		if games_played[i]>10
+  		if games_played[i]>5
   			lastNGamesStatLines[0].length.times.each do |j|
   				max[j]<lastNGamesStatLines[i][j] ? max[j] = lastNGamesStatLines[i][j] : max[j]
   			end
@@ -83,18 +77,28 @@ class Cgame < ApplicationRecord
   	max
   end
 
+  def self.fillOutOldStats(currentStatLines, incompleteOldStatLines)
+    incompleteOldStatLines = nil ? num_old=0 : num_old=incompleteOldStatLines.length
+    completeOldStatLines=[]
+    num_missing=0
+    currentStatLines.length.times do |i|
+      if i>num_old or currentStatLines[i][1]!=incompleteOldStatLines[i-num_missing][1]
+        completeOldStatLines<<currentStatLines[i].slice(0,2)+[0]*(currentStatLines[i].length-2)
+        num_missing+=1
+      else
+        completeOldStatLines<<incompleteOldStatLines[i-num_missing]
+      end
+    end
+    completeOldStatLines
+  end
+
   def self.getTotal(categories, numGames, weights)
-    weights=[1]
   	currentStatLines = getCurrentStats(categories)
-    puts "current"
-    puts currentStatLines.join(' ')
-  	oldStatLines = getNGamesAgoStats(categories, numGames)
-    puts "old"
-    puts oldStatLines.join(' ')
+  	incompleteOldStatLines = getNGamesAgoStats(categories, numGames)
+
+    oldStatLines = fillOutOldStats(currentStatLines, incompleteOldStatLines)
   	lastNGamesStatLines = getLastNGamesStatLines(currentStatLines, oldStatLines, numGames)
-    puts "last n"
-    puts lastNGamesStatLines.join(' ')
-  	#lastNGamesStatLines=currentStatLines
+
   	games_played = currentStatLines.map{|player| [player[2]+1,numGames].min}
   	min = getMin(lastNGamesStatLines, games_played)
   	max = getMax(lastNGamesStatLines, games_played)
@@ -103,7 +107,6 @@ class Cgame < ApplicationRecord
   	lastNGamesStatLines.zip(ratings).map{|statLine, rating| statLine.push(rating)}
 
   	lastNGamesStatLines=reinsertNamesGames(lastNGamesStatLines, currentStatLines, numGames)
-    puts lastNGamesStatLines[0]
   	lastNGamesStatLines.sort_by!{|statLine| -statLine[statLine.length-2]}
 
   end

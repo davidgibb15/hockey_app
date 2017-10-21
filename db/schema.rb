@@ -12,10 +12,15 @@
 
 ActiveRecord::Schema.define(version: 20170712061231) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "cgames", force: :cascade do |t|
     t.string "name"
     t.integer "games_played"
-    t.integer "player_id"
+    t.bigint "player_id"
+    t.bigint "home_team_id"
+    t.bigint "away_team_id"
     t.boolean "home"
     t.string "pos"
     t.date "date"
@@ -45,15 +50,15 @@ ActiveRecord::Schema.define(version: 20170712061231) do
     t.integer "fol"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "home_team_id"
-    t.integer "away_team_id"
     t.index ["away_team_id"], name: "index_cgames_on_away_team_id"
     t.index ["home_team_id"], name: "index_cgames_on_home_team_id"
     t.index ["player_id"], name: "index_cgames_on_player_id"
   end
 
   create_table "igames", force: :cascade do |t|
-    t.integer "player_id"
+    t.bigint "player_id"
+    t.bigint "home_team_id"
+    t.bigint "away_team_id"
     t.boolean "home"
     t.string "pos"
     t.date "date"
@@ -83,8 +88,6 @@ ActiveRecord::Schema.define(version: 20170712061231) do
     t.integer "fol"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "home_team_id"
-    t.integer "away_team_id"
     t.index ["away_team_id"], name: "index_igames_on_away_team_id"
     t.index ["home_team_id"], name: "index_igames_on_home_team_id"
     t.index ["player_id"], name: "index_igames_on_player_id"
@@ -92,7 +95,7 @@ ActiveRecord::Schema.define(version: 20170712061231) do
 
   create_table "players", force: :cascade do |t|
     t.string "name"
-    t.integer "team_id"
+    t.bigint "team_id"
     t.boolean "lw"
     t.boolean "rw"
     t.boolean "c"
@@ -112,4 +115,11 @@ ActiveRecord::Schema.define(version: 20170712061231) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "cgames", "players"
+  add_foreign_key "cgames", "teams", column: "away_team_id"
+  add_foreign_key "cgames", "teams", column: "home_team_id"
+  add_foreign_key "igames", "players"
+  add_foreign_key "igames", "teams", column: "away_team_id"
+  add_foreign_key "igames", "teams", column: "home_team_id"
+  add_foreign_key "players", "teams"
 end
